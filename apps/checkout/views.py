@@ -55,6 +55,7 @@ class CartItemView(TemplateView):
 
         session_key = self.request.session.session_key
         cart_itens = CartItem.objects.filter(cart_key=session_key)
+
         # calcula total
         total = 0
         for item in cart_itens:
@@ -75,10 +76,8 @@ class CartItemView(TemplateView):
             context['formset'] = self.get_formset(clear=True)
 
             if session_key and CartItem.objects.filter(cart_key=session_key).exists():
-                # context['carrinho'] = True
                 messages.success(request, 'Carrinho Atualizado com Sucesso!')
-            # else:
-                # context['carrinho'] = False
+
         cart_itens = CartItem.objects.filter(cart_key=session_key)
         # calcula total
         total = 0
@@ -104,7 +103,7 @@ class CartItemView(TemplateView):
 
 
 # finalizar compra
-# @login_required
+@login_required
 def checkout_cart(request):
     session_key = request.session.session_key
     user = request.user
@@ -124,6 +123,7 @@ def checkout_cart(request):
         return redirect('cart')
     return render(request, 'checkout/checkout.html', locals())
 
+@login_required
 def order_list(request):
     orders = Order.objects.filter(user=request.user)
     return render(request, 'checkout/order.html', locals())
