@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block container %}
+    <div class="container margin-top">
+
+        <ol class="breadcrumb">
+          <li><a href="#">Início</a></li>
+          <li class="active">Carrinho de Compras</li>
+        </ol>
+
+		<div class="page-header">
+			<h1>Carrinho de Compras</h1>
+		</div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <form class="" action="" method="post">
+                    {% csrf_token %}
+                    <table class="table table-bordered">
+                        <thead>
+                            <th>ID</th>
+                            <th>Nome</th>
+							<th>Preço</th>
+                            <th style="width: 10%;">Quantidade</th>
+							<th></th>
+                        </thead>
+
+                        <tbody>
+                            {{ formset.management_form }}
+                            {% for form in formset %}
+                                <tr>
+                                    <td>
+                                        {{ form.instance.id }}
+                                    </td>
+                                    <td>
+                                        {{ form.instance.product }}
+                                    </td>
+                                    <td>
+                                        R$ {{ form.instance.price }}
+                                    </td>
+                                    <td>
+                                        {% render_field form.quantity class="form-control" %}
+                                    </td>
+                                    <td class="text-center">
+                                        <button name="{{ form.DELETE.html_name }}" id="{{ form.DELETE.html_name }}" value="on" type="submit" class="btn btn-danger btn-sm">remover</button>
+                                    </td>
+                                </tr>
+                            {{ form.id }}
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                    <p class="text-right">
+						<a href="{% url 'products' %}" class="pull-left btn btn-default">Continuar Compras</a>
+						<button type="submit" class="btn btn-primary" name="button">Atualizar Carrinho</button>
+						<a href="{% url 'checkout' %}" class="btn btn-success">Finalizar Compra</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

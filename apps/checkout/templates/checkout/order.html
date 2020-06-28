@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block container %}
+	<div class="page-header">
+	  <h1>Pedidos</h1>
+	</div>
+	<div class="row">
+        <div class="col-sm-12">
+			<table class="table w-100" cellspacing="0">
+				<thead>
+					<tr>
+						<th>Order</th>
+						<th>Endereço</th>
+						<th>Status</th>
+						<th>Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for order in orders %}
+						<tr>
+							<td>{{ order.id }}</td>
+							<td>{{ order.endereco }}</td>
+							<td>{{ order.get_status_display }}</td>
+							<td>R$ {{ order.total }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}
+

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block container %}
+	<div class="page-header">
+		{% if category %}
+			<h1>Categoria {{ category.name }}</h1>
+        {% elif query %}
+            <h1>Pesquisa sobre: {{ query }}</h1>
+		{% else %}
+			<h1>Produtos</h1>
+		{% endif %}
+	</div>
+
+	<form action="{% url 'haystack_search' %}" method="get" class="page-header">
+		<fieldset>
+			<div class="form-group">
+				<input name="q" id="q" {% if query %}value="{{ query }}"{% endif %} class="form-control my-0 py-1 red-border" type="text" placeholder="Pesquisar produto..." aria-label="Search">
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary">Pesquisar</button>
+			</div>
+		</fieldset>
+	</form>
+
+	<div class="row">
+		{% for product in page.object_list %}
+			<div class="col-sm-6 col-md-4">
+				<div class="thumbnail">
+					{% if product.object.photo %}
+						<a href="{{ product.object.get_absolute_url }}">
+							<img src="/media/{{ product.object.photo }}" alt="{{ product.name }}" class="img-card" style="object-fit: cover; width: 350px; height: 250px;">
+						</a>
+					{% else %}
+						<a href="#">
+							<img src="http://placehold.it/350x250" alt="" />
+						</a>
+					{% endif %}
+
+					<div class="caption">
+						<h3>{{ product.object.name }}</h3>
+						<p>{{ product.object.description }}</p>
+						<p><a href="{% url 'create_cartitem' product.object.slug %}" class="btn btn-success" role="button">Adicionar ao carrinho</a> </p>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+
+	<div class="card-footer" align="right">
+		<ul class="pagination pagination-md justify-content-end align-items-center">
+
+			{% if page.has_previous %}
+				<li class="page-item">
+					<a class="page-link" href="?q={{ query }}&amp;page={{ page.previous_page_number }}" aria-label="Previous">
+					<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+			{% endif %}
+
+				<li class="page-item disabled">
+					<span class="page-link">
+						{{ page.number }}
+					</span>
+				</li>
+
+			{% if page.has_next %}
+				<li class="page-item">
+						<a class="page-link" href="?q={{ query }}&amp;page={{ page.next_page_number }}" aria-label="Next">
+						<span aria-hidden="true"> &raquo;</span>
+					</a>
+				</li>
+			{% endif %}
+		</ul>
+	</div>
+{% endblock %}
+

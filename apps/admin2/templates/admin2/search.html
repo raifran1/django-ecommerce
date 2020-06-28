@@ -1,0 +1,88 @@
+{% extends 'admin2/base.html' %}
+
+{% block container %}
+    <div class="container-fluid h6">
+        <ol class="breadcrumb my-3 small">
+            <li class="breadcrumb-item"><a href="{% url 'index_admin' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active">Produtos</li>
+        </ol>
+
+        <div class="card mb-4">
+            <div class="card-header d-flex align-items-center align-content-between">
+            	<i class="icofont-bus mr-1"></i>Produtos
+            	<a href="{% url 'product_create_admin' %}" type="button" class="btn btn-sm btn-success text-white ml-auto">Cadastrar produto</a>
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive small">
+                    <form class="row pb-2" method="get" action="{% url 'haystack_search_admin' %}">
+                        <div class="col-6">
+                            <input type="text" name="q" id="q" {% if query %}value="{{ query }}"{% endif %} class="form-control rounded-0" placeholder="Digite o nome de algum curso...">
+                        </div>
+                        <div class="col-6">
+                            <button type="submit" class="btn btn-sm btn-primary py-1"><i class="fa fa-search mr-2"></i>Pesquisar</button>
+                        </div>
+                    </form>
+                    <table class="table w-100" cellspacing="0">
+
+
+
+                    	<thead>
+							<tr>
+                                <th>Foto</th>
+                                <th>Nome</th>
+                                <th>Categoria</th>
+                                <th>Preço</th>
+                                <th>Ações</th>
+							</tr>
+						</thead>
+
+                        <tbody>
+                            {% for product in page.object_list %}
+                                <tr>
+                                    <td><img src="/media/{{ product.object.photo }}" width="190" height="130"></td>
+                                    <td>{{ product.object.name }}</td>
+                                    <td>{{ product.object.category }}</td>
+                                    <td>{{ product.object.price }}</td>
+                                    <td>
+                                        <a href="{% url 'product_detail_admin' product.object.slug %}" type="button" class="btn btn-sm btn-outline-secondary px-2 py-1 mr-2"><i class="fa fa-eye"></i></a>
+                                        <a href="{% url 'product_edit_admin' product.object.slug %}" type="button" class="btn btn-sm btn-outline-primary px-2 py-1 mr-2"><i class="fa fa-edit"></i></a>
+                                        <a href="{% url 'product_delete_admin' product.object.slug %}" type="button" class="btn btn-sm btn-outline-danger delete px-2 py-1"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+                <ul class="pagination pagination-md justify-content-end align-items-center">
+
+                    {% if page.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?q={{ query }}&amp;page={{ page.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+
+                        <li class="page-item disabled">
+                            <span class="page-link">
+                                {{ page.number }}
+                            </span>
+                        </li>
+
+                    {% if page.has_next %}
+                        <li class="page-item">
+                                <a class="page-link" href="?q={{ query }}&amp;page={{ page.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true"> &raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

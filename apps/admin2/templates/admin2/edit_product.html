@@ -1,0 +1,46 @@
+{% extends 'admin2/base.html' %}
+{% load widget_tweaks %}
+
+{% block container %}
+    <div class="container-fluid">
+        <ol class="breadcrumb my-3 small">
+            <li class="breadcrumb-item"><a href="{% url 'index_admin' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'product_list_admin' %}">Produtos</a></li>
+            <li class="breadcrumb-item active">Cadastrar Produto</li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-header d-flex align-items-center align-content-between">
+                <i class="icofont-bus mr-1"></i>Cadastrar Produto
+            </div>
+            <div class="card-body small">
+                <form method="post" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label for="id_name"><h6>Nome do produto</h6></label>
+                            {% render_field form.name class='form-control' placeholder='Nome' %}
+                        </div>
+                        <div class="form-group col-6">
+                            <label for="id_category"><h6>Categoria</h6></label>
+                            {% render_field form.category class='form-control' %}
+                        </div>
+                        <div class="form-group col-12">
+                            <label for="id_description"><h6>Descrição do produto</h6></label>
+                            {% render_field form.description class='form-control' %}
+                        </div>
+                        <div class="form-group col-6">
+                            <label for="id_price"><h6>Preço</h6></label>
+                            {% render_field form.price class='form-control' placeholder='Preço' %}
+                        </div>
+                        <div class="form-group col-6" style="padding-top: 40px">
+                            {% render_field form.photo %}
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-sm btn-success px-3"><i class="fa fa-check-circle mr-2"></i>Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock%}

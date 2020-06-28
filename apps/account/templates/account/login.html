@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block container %}
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="page-header">
+                <h1>Entrar</h1>
+            </div>
+            <form action="{% url 'login' %}" method="post" class="form-horizontal">
+                {% csrf_token%}
+                <fieldset>
+                    <div class="form-group">
+                      <label for="id_email" class="col-md-3 control-label">Usuário</label>
+                      <div class="col-md-9">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Usuário" />
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="id_email" class="col-md-3 control-label">Senha</label>
+                      <div class="col-md-9">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Senha" />
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md-9 col-md-offset-3">
+                          <a href="{% url 'add_user' %}" class="btn btn-link">Cadastrar</a>
+                          <button type="submit" class="btn btn-primary">Enviar</button>
+                      </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+{% endblock %}

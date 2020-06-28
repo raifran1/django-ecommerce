@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block container %}
+	<div class="page-header">
+	  <h1>Página do Produto</h1>
+	</div>
+	<div class="row">
+        <div class="col-sm-4">
+		    {% if product.photo %}
+				<a href="{{ product.get_absolute_url }}">
+					<img src="/media/{{ product.photo }}" alt="{{ product.name }}" style="object-fit: contain; width: 300px; height: 250px;">
+				</a>
+			{% else %}
+				<a href="#">
+					<img src="http://placehold.it/350x250" alt="" />
+				</a>
+			{% endif %}
+		</div>
+        <div class="col-sm-8">
+		    <dl>
+			    <dt>Nome do produto:</dt>
+			    <dd>{{ product.name }}</dd>
+
+			    <dt>Descrição:</dt>
+			    <dd>{{ product.description }}</dd>
+
+				<dt>Categoria:</dt>
+			    <dd>{{ product.category }}</dd>
+
+			    <dt>Preço:</dt>
+			    <dd>{{ product.price }}</dd>
+		    </dl>
+			<div class="row">
+				<a href="{% url 'products' %}" class="btn btn-default" role="button">Voltar</a>
+				<a href="{% url 'create_cartitem' product.slug %}" class="btn btn-success" role="button">Adicionar ao carrinho</a>
+			</div>
+        </div>
+	</div>
+{% endblock %}
+
