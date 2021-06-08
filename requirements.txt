@@ -4,7 +4,7 @@ django-appconf==1.0.4
 django-autoslug-iplweb==1.9.5
 django-haystack==2.8.1
 django-widget-tweaks==1.4.8
-Pillow==7.1.2
+Pillow==8.2.0
 pytz==2020.1
 rcssmin==1.0.6
 rjsmin==1.1.0
