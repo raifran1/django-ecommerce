@@ -1,5 +1,5 @@
 certifi==2020.6.20
-Django==2.2.13
+Django==2.2.22
 django-appconf==1.0.4
 django-autoslug-iplweb==1.9.5
 django-haystack==2.8.1
